@@ -5,7 +5,7 @@ This is a module for the Server Class.
 
 import csv
 import math
-from typing import List, Tuple
+from typing import List, Tuple, Dict
 
 
 def index_range(page: int, page_size: int) -> Tuple[int, int]:
@@ -66,12 +66,12 @@ class Server:
         except IndexError:
             return []
 
-    def get_hyper(self, page: int = 1, page_size: int = 10) -> List[List]:
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
         '''
         This method returns a dictionary containing:
         page_size: the length of the returned dataset page
         page: the current page number
-        data: the dataset page (equivalent to return from previous task)
+        data: the dataset page (equivalent to return from get_page)
         next_page: number of the next page, None if no next page
         prev_page: number of the previous page, None if no previous page
         total_pages: the total number of pages in the dataset as an integer
@@ -86,8 +86,8 @@ class Server:
         '''
         data = self.get_page(page, page_size)
         # start, end = index_page(page, page_size)
-        next_page = 0
-        prev_page = 0
+        # next_page = 0
+        # prev_page = 0
         total_page = math.ceil(len(self.dataset()) / page_size)
         page_size = len(data)
 
