@@ -103,4 +103,4 @@ class Server:
 
         return {'page_size': page_size, 'page': page, 'data': data,
                 'next_page': next_page, 'prev_page': prev_page,
-                'total_page': total_page}
+                'total_pages': total_page}
