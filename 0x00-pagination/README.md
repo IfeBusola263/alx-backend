@@ -1,10 +1,11 @@
 ## PAGINATION
 In this project i show:
 
-> How to paginate a dataset with simple page and page_size parameters.
+> How to paginate a dataset with simple page and page_size parameters. <
 > How to paginate a dataset with hypermedia metadata.
+---
 > How to paginate in a deletion-resilient manner.
-
+---
 * 0-simple_helper_function.py
 ```
 Function named index_range that takes two integer arguments page and page_size.
