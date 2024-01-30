@@ -12,7 +12,6 @@ class MRUCache(BaseCaching):
     is a very basic on.
     """
 
-
     def __init__(self):
         """
         The first method to be called at the instantiation of the
@@ -41,7 +40,7 @@ class MRUCache(BaseCaching):
                 # Check for similar occurence in the tracker
                 # If there's none with a higher number, the most
                 # recent is discarded
-                if max(list(self.occur.values())) == 1:
+                if max(self.occur.values()) == 1:
                     most_used = list(self.occur.keys())[-1]
 
                 # if not the most used should be discarded
@@ -50,7 +49,6 @@ class MRUCache(BaseCaching):
                 del self.cache_data[most_used]
                 del self.occur[most_used]
                 print(f'DISCARD: {most_used}')
-
 
     def get(self, key):
         """
