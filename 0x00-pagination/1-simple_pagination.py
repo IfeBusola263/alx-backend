@@ -41,6 +41,7 @@ class Server:
                 reader = csv.reader(f)
                 dataset = [row for row in reader]
             self.__dataset = dataset[1:]
+            # print(sum(self.__dataset))
 
         return self.__dataset
 
