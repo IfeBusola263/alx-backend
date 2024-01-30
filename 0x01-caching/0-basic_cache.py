@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """ BaseCaching module
+Which other Classes inherit from
 """
 
 
@@ -11,12 +12,14 @@ class BaseCaching():
     MAX_ITEMS = 4
 
     def __init__(self):
-        """ Initiliaze
+        """ Initiliaze method.
+        This is the first method after initialization.
         """
         self.cache_data = {}
 
     def print_cache(self):
-        """ Print the cache
+        """ This method prints
+        the cache
         """
         print("Current cache:")
         for key in sorted(self.cache_data.keys()):
@@ -24,12 +27,14 @@ class BaseCaching():
 
     def put(self, key, item):
         """ Add an item in the cache
+        based on an algorithm
         """
         raise NotImplementedError(
             "put must be implemented in your cache class")
 
     def get(self, key):
-        """ Get an item by key
+        """ Get an item by key from the cache.
+        This is implemented by the child classes.
         """
         raise NotImplementedError(
             "get must be implemented in your cache class")
