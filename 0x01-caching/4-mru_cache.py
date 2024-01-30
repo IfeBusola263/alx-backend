@@ -11,7 +11,7 @@ class MRUCache(BaseCaching):
     to implements several agrorithms for caching. This
     is a very basic on.
     """
-    occur = {}
+
 
     def __init__(self):
         """
@@ -19,6 +19,7 @@ class MRUCache(BaseCaching):
         class
         """
         super().__init__()
+        self.occur = {}
 
     def put(self, key, item):
         """
@@ -30,9 +31,9 @@ class MRUCache(BaseCaching):
         if key is not None and item is not None:
             # check if the key is being tracked
             # everytime a key is used, it must be counted
-            # to the MRUCache.occur so the statistics is taken
+            # to the self.occur so the statistics is taken
             # MRUCache.tk.append(key)
-            MRUCache.occur[key] = MRUCache.occur.get(key, 0) + 1
+            self.occur[key] = self.occur.get(key, 0) + 1
             self.cache_data[key] = item
 
             if len(self.cache_data) > BaseCaching.MAX_ITEMS:
@@ -40,15 +41,16 @@ class MRUCache(BaseCaching):
                 # Check for similar occurence in the tracker
                 # If there's none with a higher number, the most
                 # recent is discarded
-                if max(list(MRUCache.occur.values())) == 1:
-                    most_used = list(MRUCache.occur.keys())[-1]
+                if max(list(self.occur.values())) == 1:
+                    most_used = list(self.occur.keys())[-1]
 
                 # if not the most used should be discarded
                 else:
-                    most_used = max(MRUCache.occur, key=MRUCache.occur.get)
+                    most_used = max(self.occur, key=self.occur.get)
                 del self.cache_data[most_used]
-                del MRUCache.occur[most_used]
+                del self.occur[most_used]
                 print(f'DISCARD: {most_used}')
+
 
     def get(self, key):
         """
@@ -58,12 +60,12 @@ class MRUCache(BaseCaching):
         if key is not None:
 
             # Tracking usage of data same as in the put method
-            if key in MRUCache.occur:
-                MRUCache.occur[key] = MRUCache.occur.get(key, 0) + 1
+            if key in self.occur:
+                self.occur[key] = self.occur.get(key, 0) + 1
 
             # The get method of dictionaries return None
             # if the key does not exists. But if it does, the
             # corresponding value is returned
-            # print(MRUCache.occur)
+            # print(self.occur)
             return self.cache_data.get(key)
         return None
