@@ -1,43 +1,8 @@
 #!/usr/bin/env python3
-""" BaseCaching module
-Which other Classes inherit from
-"""
-
-
-class BaseCaching():
-    """ BaseCaching defines:
-      - constants of your caching system
-      - where your data are stored (in a dictionary)
-    """
-    MAX_ITEMS = 4
-
-    def __init__(self):
-        """ Initiliaze method.
-        This is the first method after initialization.
-        """
-        self.cache_data = {}
-
-    def print_cache(self):
-        """ This method prints
-        the cache
-        """
-        print("Current cache:")
-        for key in sorted(self.cache_data.keys()):
-            print("{}: {}".format(key, self.cache_data.get(key)))
-
-    def put(self, key, item):
-        """ Add an item in the cache
-        based on an algorithm
-        """
-        raise NotImplementedError(
-            "put must be implemented in your cache class")
-
-    def get(self, key):
-        """ Get an item by key from the cache.
-        This is implemented by the child classes.
-        """
-        raise NotImplementedError(
-            "get must be implemented in your cache class")
+'''
+This module houses a basic caching class.
+'''
+from base_caching import BaseCaching
 
 
 class BasicCache(BaseCaching):
