@@ -42,8 +42,8 @@ class MRUCache(BaseCaching):
                 del self.cache_data[self.tk[0]]
                 print(f'DISCARD: {self.tk[0]}')
 
-                # once deletion happens the recently used key is tracked
-                self.tk[0] = key
+            # once deletion happens the recently used key is tracked
+            self.tk[0] = key
 
     def get(self, key):
         """
