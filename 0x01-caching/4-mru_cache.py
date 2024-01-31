@@ -18,7 +18,8 @@ class MRUCache(BaseCaching):
         class
         """
         super().__init__()
-        self.occur = {}
+        # self.occur = {}
+        self.tk = ['']
 
     def put(self, key, item):
         """
@@ -27,28 +28,22 @@ class MRUCache(BaseCaching):
         beyond maximum limit the most recently used data is discarded.
         """
 
+        # confirm the key is not none
         if key is not None and item is not None:
-            # check if the key is being tracked
-            # everytime a key is used, it must be counted
-            # to the self.occur so the statistics is taken
-            # MRUCache.tk.append(key)
-            self.occur[key] = self.occur.get(key, 0) + 1
+
+            # allocate the item to the key in the cache
             self.cache_data[key] = item
 
+            # check if the cache is not over loaded
             if len(self.cache_data) > BaseCaching.MAX_ITEMS:
 
-                # Check for similar occurence in the tracker
-                # If there's none with a higher number, the most
-                # recent is discarded
-                if max(self.occur.values()) == 1:
-                    most_used = list(self.occur.keys())[-1]
+                # delete the most recently used data which is tracked in
+                # self.tk
+                del self.cache_data[self.tk[0]]
+                print(f'DISCARD: {self.tk[0]}')
 
-                # if not the most used should be discarded
-                else:
-                    most_used = max(self.occur, key=self.occur.get)
-                del self.cache_data[most_used]
-                del self.occur[most_used]
-                print(f'DISCARD: {most_used}')
+                # once deletion happens the recently used key is tracked
+                self.tk[0] = key
 
     def get(self, key):
         """
@@ -56,10 +51,9 @@ class MRUCache(BaseCaching):
         If the key is not in the cached data, None is returned.
         """
         if key is not None:
-
             # Tracking usage of data same as in the put method
-            if key in self.occur:
-                self.occur[key] = self.occur.get(key, 0) + 1
+            if key in self.cache_data:
+                self.tk[0] = key
 
             # The get method of dictionaries return None
             # if the key does not exists. But if it does, the
