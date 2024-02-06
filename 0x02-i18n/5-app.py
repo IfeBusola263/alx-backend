@@ -18,6 +18,7 @@ class Config(object):
     BABEL_DEFAULT_LOCALE: str = 'en'
     BABEL_DEFAULT_TIMEZONE: str = 'UTC'
 
+
 app.config.from_object(Config)
 users = {
     1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
@@ -26,9 +27,10 @@ users = {
     4: {"name": "Teletubby", "locale": None, "timezone": "Europe/London"},
 }
 
+
 def get_user() -> Union[Dict, None]:
     """
-    A function to user login. the users dictionary is the 
+    A function to user login. the users dictionary is the
     dummy database used to validate a user login.
     """
     user_login = request.args.get('login_as')
@@ -38,6 +40,7 @@ def get_user() -> Union[Dict, None]:
     # the get method for a dict will return None if the attribute
     # is not found
     return user_login
+
 
 @app.before_request
 def before_request():
