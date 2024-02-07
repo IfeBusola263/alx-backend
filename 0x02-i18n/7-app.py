@@ -93,7 +93,7 @@ def get_locale() -> str:
 
 
 @babel.timezoneselector
-def get_timezone():
+def get_timezone() -> str:
     """
     This function gets the timezone of based on uRL parameter
     or the user setting or the default is used.
@@ -105,7 +105,7 @@ def get_timezone():
     if tz:
         try:
             tz_value = timezone(tz)
-            return tz_value
+            return tz
         except pytz.exceptions.UnknownTimeZoneError as e:
             pass
 
@@ -118,8 +118,8 @@ def index() -> str:
     The route to the home page of the app.
     """
     if g.user:
-        return render_template('6-index.html', username=g.user.get('name'))
-    return render_template('6-index.html')
+        return render_template('7-index.html', username=g.user.get('name'))
+    return render_template('7-index.html')
 
 
 if __name__ == '__main__':
