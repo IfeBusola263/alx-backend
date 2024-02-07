@@ -5,7 +5,7 @@ This module is a flask application for a single route.
 from flask import Flask, render_template, request, g
 from flask_babel import Babel
 from typing import List, Union, Dict
-from pytz import timezone
+from pytz import timezone, exceptions
 app = Flask(__name__)
 babel = Babel(app)
 
@@ -60,8 +60,6 @@ def get_locale() -> str:
     request of the user.
     """
     default = request.accept_languages.best_match(app.config['LANGUAGES'])
-    bm = request.accept_languages.best_match
-    lang = app.config['LANGUAGES'][1]
 
     # Locale from URL parameters
     locale = request.args.get('locale')
@@ -82,12 +80,12 @@ def get_locale() -> str:
         locale = g.user.get('locale')
         if not locale:
             return default
-        return locale if locale in app.config['LANGUAGES'] else bm(lang)
+        return locale if locale in app.config['LANGUAGES'] else default
 
     # Locale from request header
-    locale = request.header.get('locale')
+    locale = request.headers.get('locale')
     if locale:
-        return locale if locale in app.config['LANGUAGES'] else bm(locale)
+        return locale if locale in app.config['LANGUAGES'] else default
 
     return app.config['BABEL_DEFAULT_LOCALE']
 
@@ -106,7 +104,7 @@ def get_timezone() -> str:
         try:
             tz_value = timezone(tz)
             return tz
-        except pytz.exceptions.UnknownTimeZoneError as e:
+        except exceptions.UnknownTimeZoneError as e:
             pass
 
     return app.config['BABEL_DEFAULT_TIMEZONE']
