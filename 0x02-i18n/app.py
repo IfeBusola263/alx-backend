@@ -3,9 +3,10 @@
 This module is a flask application for a single route.
 '''
 from flask import Flask, render_template, request, g
-from flask_babel import Babel
+from flask_babel import Babel, format_datetime
 from typing import List, Union, Dict
-from pytz import timezone
+from pytz import timezone, exceptions
+from datetime import datetime
 app = Flask(__name__)
 babel = Babel(app)
 
@@ -106,7 +107,7 @@ def get_timezone() -> str:
         try:
             tz_value = timezone(tz)
             return tz
-        except pytz.exceptions.UnknownTimeZoneError as e:
+        except exceptions.UnknownTimeZoneError as e:
             pass
 
     return app.config['BABEL_DEFAULT_TIMEZONE']
@@ -118,7 +119,9 @@ def index() -> str:
     The route to the home page of the app.
     """
     if g.user:
-        return render_template('index.html', username=g.user.get('name'))
+        t = format_datetime(datetime.now())
+        return render_template('index.html',
+                               username=g.user.get('name'), ctime=t)
     return render_template('index.html')
 
 
